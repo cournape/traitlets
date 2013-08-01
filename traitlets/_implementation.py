@@ -66,6 +66,16 @@ except:
 
 import six
 
+#maxsize = sys.maxsize
+if not six.PY3:
+    if sys.version_info[1] < 6:
+        maxsize = 2 ** 63 - 1
+        bytes = str
+    else:
+        maxsize = sys.maxsize
+else:
+    maxsize = sys.maxsize
+
 def import_item(name):
     """Import and return ``bar`` given the string ``foo.bar``.
 
@@ -1039,7 +1049,7 @@ class CComplex(Complex):
 class Bytes(TraitType):
     """A trait for byte strings."""
 
-    default_value = b''
+    default_value = six.b('')
     info_text = 'a string'
 
     def validate(self, obj, value):
@@ -1277,7 +1287,7 @@ class List(Container):
     """An instance of a Python list."""
     klass = list
 
-    def __init__(self, trait=None, default_value=None, minlen=0, maxlen=sys.maxsize,
+    def __init__(self, trait=None, default_value=None, minlen=0, maxlen=maxsize,
                 allow_none=True, **metadata):
         """Create a List trait type from a list, set, or tuple.
 
