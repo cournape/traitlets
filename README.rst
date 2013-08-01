@@ -6,13 +6,15 @@ It supports both python 2.x and python 3.x (>= python 3.2).
 Example
 -------
 
-class Employee(HasTraits):
-    name = Unicode()
-    age = Long()
+Simple model for an employee::
 
-dilbert = Employee(name="dilbert", age=35)
-# This will raise an error as age is not a string
-dilbert.age = "35"
+        class Employee(HasTraits):
+            name = Unicode()
+            age = Long()
+
+        dilbert = Employee(name="dilbert", age=35)
+        # This will raise an error as age is not a string
+        dilbert.age = "35"
 
 Installation
 ------------
