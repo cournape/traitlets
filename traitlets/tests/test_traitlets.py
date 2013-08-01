@@ -29,14 +29,13 @@ import nose.tools as nt
 from nose import SkipTest
 import six
 
-from ..traitlets import (
+from traitlets import (
     HasTraits, MetaHasTraits, TraitType, Any, CBytes, Dict,
     Int, Long, Integer, Float, Complex, Bytes, Unicode, TraitError,
     Undefined, Type, This, Instance, TCPAddress, List, Tuple,
     ObjectName, DottedObjectName, CRegExp
 )
-from .. import py3compat
-from ..misc import skipif
+from traitlets.misc import skipif
 
 if six.PY3:
     long = int
@@ -683,7 +682,7 @@ class TestInt(TraitTestBase):
     _bad_values    = ['ten', six.u('ten'), [10], {'ten': 10},(10,), None, 1j,
                       10.1, -10.1, 'long(10)', '-long(10)', '10.1', '-10.1', six.u('long(10)'),
                       six.u('-long(10)'), six.u('10.1'), six.u('-10.1'),  '10', '-10', six.u('10'), six.u('-10')]
-    if not py3compat.PY3:
+    if not six.PY3:
         _bad_values.extend([long(10), -long(10), 10*sys.maxint, -10*sys.maxint])
 
 
@@ -701,11 +700,11 @@ class TestLong(TraitTestBase):
                       None, 1j, 10.1, -10.1, '10', '-10', 'long(10)', '-long(10)', '10.1',
                       '-10.1', six.u('10'), six.u('-10'), six.u('long(10)'), six.u('-long(10)'), six.u('10.1'),
                       six.u('-10.1')]
-    if not py3compat.PY3:
+    if not six.PY3:
         # maxint undefined on py3, because int == long
         _good_values.extend([10*sys.maxint, -10*sys.maxint])
 
-    @skipif(py3compat.PY3, "not relevant on py3")
+    @skipif(six.PY3, "not relevant on py3")
     def test_cast_small(self):
         """Long casts ints to long"""
         self.obj.value = 10
@@ -722,10 +721,10 @@ class TestInteger(TestLong):
     def coerce(self, n):
         return int(n)
 
-    @skipif(py3compat.PY3, "not relevant on py3")
+    @skipif(six.PY3, "not relevant on py3")
     def test_cast_small(self):
         """Integer casts small longs to int"""
-        if py3compat.PY3:
+        if six.PY3:
             raise SkipTest("not relevant on py3")
 
         self.obj.value = long(100)
@@ -745,7 +744,7 @@ class TestFloat(TraitTestBase):
     _bad_values    = ['ten', six.u('ten'), [10], {'ten': 10},(10,), None,
                       1j, '10', '-10', 'long(10)', '-long(10)', '10.1', '-10.1', six.u('10'),
                       six.u('-10'), six.u('long(10)'), six.u('-long(10)'), six.u('10.1'), six.u('-10.1')]
-    if not py3compat.PY3:
+    if not six.PY3:
         _bad_values.extend([long(10), -long(10)])
 
 
@@ -761,7 +760,7 @@ class TestComplex(TraitTestBase):
     _good_values   = [10, -10, 10.1, -10.1, 10j, 10+10j, 10-10j,
                       10.1j, 10.1+10.1j, 10.1-10.1j]
     _bad_values    = [six.u('long(10)'), six.u('-long(10)'), 'ten', [10], {'ten': 10},(10,), None]
-    if not py3compat.PY3:
+    if not six.PY3:
         _bad_values.extend([long(10), -long(10)])
 
 
