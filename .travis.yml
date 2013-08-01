@@ -1,0 +1,10 @@
+language: python
+python:
+   - 2.7,3.2
+install:
+   - pip install coverage nose six
+script:
+  - nosetests --with-coverage --cover-package=traitlets traitlets
+notifications:
+  email:
+    - cournape@gmail.com
