@@ -766,15 +766,16 @@ class TestComplex(TraitTestBase):
 
 class BytesTrait(HasTraits):
 
-    value = Bytes(b'string')
+    value = Bytes(six.b('string'))
 
 class TestBytes(TraitTestBase):
 
     obj = BytesTrait()
 
-    _default_value = b'string'
-    _good_values   = [b'10', b'-10', b'long(10)',
-                      b'-long(10)', b'10.1', b'-10.1', b'string']
+    _default_value = six.b('string')
+    _good_values   = [six.b('10'), six.b('-10'), six.b('long(10)'),
+                      six.b('-long(10)'), six.b('10.1'), six.b('-10.1'),
+                      six.b('string')]
     _bad_values    = [10, -10, long(10), -long(10), 10.1, -10.1, 1j, [10],
                       ['ten'],{'ten': 10},(10,), None,  six.u('string')]
 
@@ -898,15 +899,15 @@ class TestLooseTupleTrait(TraitTestBase):
 
 class MultiTupleTrait(HasTraits):
 
-    value = Tuple(Int, Bytes, default_value=[99,b'bottles'])
+    value = Tuple(Int, Bytes, default_value=[99,six.b('bottles')])
 
 class TestMultiTuple(TraitTestBase):
 
     obj = MultiTupleTrait()
 
-    _default_value = (99,b'bottles')
-    _good_values = [(1,b'a'), (2,b'b')]
-    _bad_values = ((),10, b'a', (1,b'a',3), (b'a',1), (1, six.u('a')))
+    _default_value = (99,six.b('bottles'))
+    _good_values = [(1,six.b('a')), (2,six.b('b'))]
+    _bad_values = ((),10, six.b('a'), (1,six.b('a'),3), (six.b('a'),1), (1, six.u('a')))
 
 class CRegExpTrait(HasTraits):
 
