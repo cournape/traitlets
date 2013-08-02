@@ -66,13 +66,22 @@ except:
 
 import six
 
-#maxsize = sys.maxsize
-if not six.PY3:
-    if sys.version_info[1] < 6:
-        maxsize = 2 ** 63 - 1
-        bytes = str
+def _compute_maxsize():
+    import platform
+    if not six.PY3 and sys.version_info[1] < 6:
+        architecture = platform.architecture()[0]
+        if architecture == "32bit":
+            return sys.maxint
+        elif architecture == "64bit":
+            return 2 ** 63 - 1
+        else:
+            raise NotImplementedError("architecture %s not supported" % (architecture,))
     else:
-        maxsize = sys.maxsize
+        return sys.maxsize
+
+if not six.PY3 and sys.version_info[1] < 6:
+    maxsize = _compute_maxsize()
+    bytes = str
 else:
     maxsize = sys.maxsize
 
