@@ -35,7 +35,7 @@ from traitlets import (
     Undefined, Type, This, Instance, TCPAddress, List, Tuple,
     ObjectName, DottedObjectName, CRegExp
 )
-from traitlets.misc import skipif
+from .misc import skipif
 
 if six.PY3:
     long = int
